@@ -1,1 +1,13 @@
-不会写，后面再说。
+# 内容：Emby Proxy
+
+payload:
+
+  - DOMAIN-KEYWORD,emby
+
+  - DOMAIN-SUFFIX,media.nijigem.by
+
+  - DOMAIN-SUFFIX,emby.fengwo.cloud
+  
+  - DOMAIN-SUFFIX,emby.awatv.de
+
+
