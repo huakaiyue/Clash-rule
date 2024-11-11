@@ -1,10 +1,12 @@
 #emby
 # 最后更新时间：2024.11.11.22.25
-payload:
-DOMAIN-SUFFIX,emby.aca.best
-DOMAIN-SUFFIX,emby.fengwo.cloud
-DOMAIN-SUFFIX,porn.aca.best
+DOMAIN-KEYWORD,emby
+DOMAIN,emby.fengwo.cloud
+DOMAIN-KEYWORD,fengwo.cloud
 DOMAIN-SUFFIX,emby.awatv.de
+DOMAIN-SUFFIX,nijigem.by
+DOMAIN-SUFFIX,porn.aca.best
+DOMAIN-SUFFIX,emby.aca.best
 DOMAIN-SUFFIX,agan2.vip
 DOMAIN-SUFFIX,emby.aiyowei.ml
 DOMAIN,oversea.alphatvapp.top
@@ -74,7 +76,6 @@ DOMAIN-SUFFIX,ohhhh.org
 DOMAIN-SUFFIX,goodisp.org
 DOMAIN-SUFFIX,hovervan.org
 DOMAIN-SUFFIX,bangumi.ca
-DOMAIN-SUFFIX,nijigem.by
 DOMAIN-SUFFIX,nebula-emby.com
 DOMAIN-SUFFIX,404.sb
 DOMAIN-SUFFIX,emby.nyancat.net
