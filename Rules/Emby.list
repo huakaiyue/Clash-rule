@@ -1,13 +1,11 @@
 # 内容：Emby Proxy
 
 payload:
-
-  - DOMAIN-KEYWORD,emby
-
-  - DOMAIN-SUFFIX,media.nijigem.by
-
-  - DOMAIN-SUFFIX,emby.fengwo.cloud
-  
+  - DOMAIN,emby.awatv.de
+  - DOMAIN,emby.fengwo.cloud
+  - DOMAIN,media.nijigem.by
   - DOMAIN-SUFFIX,emby.awatv.de
+  - DOMAIN-SUFFIX,emby.fengwo.cloud
+  - DOMAIN-SUFFIX,media.nijigem.by
 
 
