@@ -331,7 +331,7 @@ const proxyGroupConfig = [
     "type": "url-test",
     "include-all": true,
     "exclude-filter": "(?i)X5",
-    "filter": "英国|GB|🇬🇧",
+    "filter": "英国|UK|🇬🇧",
     "tolerance": 50,
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png"
   }
