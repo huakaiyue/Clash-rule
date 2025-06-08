@@ -3,7 +3,7 @@ const proxyProviders = {
   "p1": {
     "type": "http",
     // 订阅 链接
-    "url": "https://xn--cp3a08l.com/api/v1/client/subscribe?token=eedeaaff95481aef275f9fffb7d8452d",
+    "url": "https",
     // 自动更新时间 86400(秒) / 3600 = 24小时
     "interval": 86400,
     "override": {
