@@ -437,47 +437,47 @@ const ruleProviders = {
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml",
     "path": "./ruleset/Gemini.yaml"
   },
-"克劳德"：{
+  "Claude": {
     ...ruleProviderCommon,
     "behavior": "classical",
-"url"："https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml"，
-"路径"："./ruleset/Claude.yaml"
+    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml",
+    "path": "./ruleset/Claude.yaml"
   },*/
   "Github": {
     ...ruleProviderCommon,
-    "行为": "经典",
-    "URL": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub_No_Resolve.yaml",
-    "路径": "./ruleset/Github.yaml"
+    "behavior": "classical",
+    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub_No_Resolve.yaml",
+    "path": "./ruleset/Github.yaml"
   },
 };
 
 // 规则
-Const规则=[
+const rules = [
   // 自定义规则
-  'GEOIP，私人，直接',
-  '中国大陆地区，直接',
-  '域名后缀，yunaq.com，直接',
-  '域名后缀，jiashule.com，直接',
-  '域后缀，linux.do，直接',
-  '域名后缀，deepseek.com，直接',
-  'DOMAIN-SUFFIX，volces.com，direct',
-  'DOMAIN-SUFFIX，portal101.cn，直接',
-  '域后缀，ephone.ai，直接',
-  "规则集，电报，电报",
-  "规则集，YouTube，YouTube",
-  "规则集，bilibili，bilibili"，
-  "规则集，TikTok，TikTok"，
-  //"规则集，Spotify，Spotify"，
- //"规则集，Netflix，Netflix"，
- //"规则集，迪士尼，迪士尼"，
-  "规则集，谷歌，谷歌",
-  "规则集，OpenAI，OpenAI",
- //"规则集，Microsoft，Microsoft"，
-  "规则集，推特推特",
-  "规则集，蒸汽，蒸汽",
- //"规则集，OneDrive，OneDrive”，
- //"规则集，双子，双子"，
- //"规则集，克劳德，克劳德"，
-  "规则集，GitHub，香港",
-  "匹配，代理"
+  'GEOIP,private,DIRECT',
+  'GEOIP,CN,DIRECT',
+  'DOMAIN-SUFFIX,yunaq.com,DIRECT',
+  'DOMAIN-SUFFIX,jiashule.com,DIRECT',
+  'DOMAIN-SUFFIX,linux.do,DIRECT',
+  'DOMAIN-SUFFIX,deepseek.com,DIRECT',
+  'DOMAIN-SUFFIX,volces.com,DIRECT',
+  'DOMAIN-SUFFIX,portal101.cn,DIRECT',
+  'DOMAIN-SUFFIX,ephone.ai,DIRECT',
+  "RULE-SET,Telegram,Telegram",
+  "RULE-SET,YouTube,YouTube",
+  "RULE-SET,BiliBili,BiliBili",
+  "RULE-SET,TikTok,TikTok",
+  //"RULE-SET,Spotify,Spotify",
+ // "RULE-SET,Netflix,Netflix",
+ // "RULE-SET,Disney,Disney",
+  "RULE-SET,Google,Google",
+  "RULE-SET,OpenAI,OpenAI",
+ // "RULE-SET,Microsoft,Microsoft",
+  "RULE-SET,Twitter,Twitter",
+  "RULE-SET,Steam,Steam",
+ // "RULE-SET,OneDrive,OneDrive",
+ // "RULE-SET,Gemini,Gemini",
+ // "RULE-SET,Claude,Claude",
+  "RULE-SET,Github,香港",
+  "MATCH,Proxy"
 ];
