@@ -7,7 +7,7 @@ const proxyProviders = {
     // 自动更新时间 86400(秒) / 3600 = 24小时
     "interval": 86400,
     "override": {
-      // 节点名称前缀 p1，用于区别机场节点
+      // 节点名称前缀 |，用于区别机场节点
       "additional-prefix": "|"
     }
   },
@@ -15,14 +15,16 @@ const proxyProviders = {
 
 // 程序入口
 function main(config) {
+  //提取代理节点数量
   const proxyCount = config?.proxies?.length ?? 0;
+  //提取代理提供商数量
   const originalProviders = config?.["proxy-providers"] || {};
   const proxyProviderCount = typeof originalProviders === "object" ? Object.keys(originalProviders).length : 0;
-
+  //代理存在性校验
   if (proxyCount === 0 && proxyProviderCount === 0) {
     throw new Error("配置文件中未找到任何代理");
   }
-
+  
   // 合并而非覆盖
   config["proxy-providers"] = {
     ...originalProviders,  // 保留原有配置
@@ -44,6 +46,7 @@ function main(config) {
   // 返回修改后的配置
   return config;
 }
+
 // DNS配置
 const dnsConfig = {
   "enable": true,
@@ -73,6 +76,7 @@ const dnsConfig = {
   "proxy-server-nameserver": ['https://doh.pub/dns-query'],
   "direct-nameserver": ['https://doh.pub/dns-query','https://dns.alidns.com/dns-query'],   //用于 direct 出口域名解析的 DNS 服务器
 };
+
 // 代理组通用配置
 const groupBaseOption = {
   "interval": 300,
@@ -87,162 +91,72 @@ const proxyGroupConfig = [
     ...groupBaseOption,
     "name": "Proxy",
     "type": "select",
-    "proxies": ["自动选择", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT", "REJECT"],
+    "proxies": ["香港", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png"
   },
   {
     ...groupBaseOption,
-    "name": "自动选择",
-    "type": "url-test",
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "tolerance": 50,
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Speedtest.png"
-  },
-  /*{
-    ...groupBaseOption,
-    "name": "Apple",
-    "type": "select",
-    "proxies": ["DIRECT", "Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "REJECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png"
-  },*/
-  {
-    ...groupBaseOption,
     "name": "Telegram",
     "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT", "REJECT"],
+    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png"
   },
   {
     ...groupBaseOption,
     "name": "YouTube",
     "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT", "REJECT"],
+    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png"
-  },
-  {
-    ...groupBaseOption,
-    "name": "BiliBili",
-    "type": "select",
-    "proxies": ["DIRECT", "Proxy", "REJECT", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili.png"
   },
   {
     ...groupBaseOption,
     "name": "OpenAI",
     "type": "select",
-    "proxies": ["Proxy", "美国", "台湾", "日本", "韩国", "香港", "德国", "新加坡", "法国", "英国", "DIRECT"],
+    "proxies": ["Proxy", "美国", "台湾", "日本", "韩国", "香港", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png"
   },
- /* {
-    ...groupBaseOption,
-    "name": "Gemini",
-    "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/guaishouxiaoqi/icons@master/Color/Gemini.png"
-  },
-  {
-    ...groupBaseOption,
-    "name": "Claude",
-    "type": "select",
-    "proxies": ["Proxy", "美国", "台湾", "日本", "韩国", "香港", "德国", "新加坡", "法国", "英国", "DIRECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/ke1ewang/Qi@master/Claude.png"
-  },*/
   {
     ...groupBaseOption,
     "name": "TikTok",
     "type": "select",
-    "proxies": ["Proxy", "台湾", "香港", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
+    "proxies": ["Proxy", "台湾", "香港", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png"
   },
- /* {
-    ...groupBaseOption,
-    "name": "Spotify",
-    "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png"
-  },
-  {
-    ...groupBaseOption,
-    "name": "Netflix",
-    "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png"
-  },
-  {
-    ...groupBaseOption,
-    "name": "Disney",
-    "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png"
-  },*/
   {
     ...groupBaseOption,
     "name": "Google",
     "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
+    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png"
   },
- /* {
-    ...groupBaseOption,
-    "name": "OneDrive",
-    "type": "select",
-    "proxies": ["DIRECT", "Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png"
-  },
-  {
-    ...groupBaseOption,
-    "name": "Microsoft",
-    "type": "select",
-    "proxies": ["DIRECT", "Proxy", "REJECT", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国"],
-    "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png"
-  },*/
   {
     ...groupBaseOption,
     "name": "Twitter",
     "type": "select",
-    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国", "DIRECT"],
+    "proxies": ["Proxy", "香港", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国", "DIRECT"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png"
   },
   {
     ...groupBaseOption,
     "name": "Steam",
     "type": "select",
-    "proxies": ["Proxy", "香港", "DIRECT", "台湾", "日本", "韩国", "美国", "德国", "新加坡", "法国", "英国"],
+    "proxies": ["Proxy", "香港", "DIRECT", "台湾", "日本", "韩国", "美国", "新加坡", "德国", "法国", "英国"],
     "include-all": true,
-    "exclude-filter": "(?i)GB|Traffic|Expire|Premium|频道|订阅|ISP|流量|到期|重置|扣费|X5",
+    "exclude-filter": "(?i)频道|订阅|ISP|流量|到期|重置|扣费",
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png"
   },
   {
@@ -297,16 +211,6 @@ const proxyGroupConfig = [
   },
   {
     ...groupBaseOption,
-    "name": "德国",
-    "type": "url-test",
-    "include-all": true,
-    "exclude-filter": "(?i)X5",
-    "filter": "德国|DE|🇩🇪",
-    "tolerance": 50,
-    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png"
-  },
-  {
-    ...groupBaseOption,
     "name": "新加坡",
     "type": "url-test",
     "include-all": true,
@@ -314,6 +218,16 @@ const proxyGroupConfig = [
     "filter": "新加坡|SG|🇸🇬",
     "tolerance": 50,
     "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
+  },
+  {
+    ...groupBaseOption,
+    "name": "德国",
+    "type": "url-test",
+    "include-all": true,
+    "exclude-filter": "(?i)X5",
+    "filter": "德国|DE|🇩🇪",
+    "tolerance": 50,
+    "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png"
   },
   {
     ...groupBaseOption,
@@ -337,7 +251,6 @@ const proxyGroupConfig = [
   }
 ];
 
-
 // 规则集通用配置
 const ruleProviderCommon = {
   "type": "http",
@@ -347,12 +260,6 @@ const ruleProviderCommon = {
 };
 // 规则集配置
 const ruleProviders = {
- /* "Apple": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml",
-    "path": "./ruleset/Apple.yaml"
-  },*/
   "Telegram": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -365,36 +272,12 @@ const ruleProviders = {
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml",
     "path": "./ruleset/YouTube.yaml"
   },
-  "BiliBili": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml",
-    "path": "./ruleset/BiliBili.yaml"
-  },
   "TikTok": {
     ...ruleProviderCommon,
     "behavior": "classical",
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TikTok/TikTok.yaml",
     "path": "./ruleset/TikTok.yaml"
   },
-  /*"Spotify": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify.yaml",
-    "path": "./ruleset/Spotify.yaml"
-  },
-  "Netflix": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix.yaml",
-    "path": "./ruleset/Netflix.yaml"
-  },
-  "Disney": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Disney/Disney.yaml",
-    "path": "./ruleset/Disney.yaml"
-  },*/
   "Google": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -407,12 +290,6 @@ const ruleProviders = {
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml",
     "path": "./ruleset/OpenAI.yaml"
   },
- /* "Microsoft": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml",
-    "path": "./ruleset/Microsoft.yaml"
-  },*/
   "Twitter": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -425,24 +302,6 @@ const ruleProviders = {
     "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml",
     "path": "./ruleset/Steam.yaml"
   },
- /* "OneDrive": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OneDrive/OneDrive.yaml",
-    "path": "./ruleset/OneDrive.yaml"
-  },
-  "Gemini": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml",
-    "path": "./ruleset/Gemini.yaml"
-  },
-  "Claude": {
-    ...ruleProviderCommon,
-    "behavior": "classical",
-    "url": "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml",
-    "path": "./ruleset/Claude.yaml"
-  },*/
   "Github": {
     ...ruleProviderCommon,
     "behavior": "classical",
@@ -454,30 +313,15 @@ const ruleProviders = {
 // 规则
 const rules = [
   // 自定义规则
-  'GEOIP,private,DIRECT',
-  'GEOIP,CN,DIRECT',
-  'DOMAIN-SUFFIX,yunaq.com,DIRECT',
-  'DOMAIN-SUFFIX,jiashule.com,DIRECT',
-  'DOMAIN-SUFFIX,linux.do,DIRECT',
-  'DOMAIN-SUFFIX,deepseek.com,DIRECT',
-  'DOMAIN-SUFFIX,volces.com,DIRECT',
-  'DOMAIN-SUFFIX,portal101.cn,DIRECT',
-  'DOMAIN-SUFFIX,ephone.ai,DIRECT',
+  'GEOIP,lan,DIRECT,no-resolve',
   "RULE-SET,Telegram,Telegram",
   "RULE-SET,YouTube,YouTube",
-  "RULE-SET,BiliBili,BiliBili",
   "RULE-SET,TikTok,TikTok",
-  //"RULE-SET,Spotify,Spotify",
- // "RULE-SET,Netflix,Netflix",
- // "RULE-SET,Disney,Disney",
   "RULE-SET,Google,Google",
   "RULE-SET,OpenAI,OpenAI",
- // "RULE-SET,Microsoft,Microsoft",
   "RULE-SET,Twitter,Twitter",
   "RULE-SET,Steam,Steam",
- // "RULE-SET,OneDrive,OneDrive",
- // "RULE-SET,Gemini,Gemini",
- // "RULE-SET,Claude,Claude",
   "RULE-SET,Github,香港",
+  'GEOIP,CN,DIRECT',
   "MATCH,Proxy"
 ];
