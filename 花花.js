@@ -74,7 +74,7 @@ const dnsConfig = {
   "nameserver": ["https://1.1.1.1/dns-query", "https://dns.google/dns-query"], // 默认的域名解析服务器
   "default-nameserver": ["tls://223.5.5.5", "tls://119.29.29.29"],  //默认DNS 用于解析 DNS服务器 的域名
   "proxy-server-nameserver": ['https://doh.pub/dns-query'],
-  "direct-nameserver": ['https://doh.pub/dns-query','https://dns.alidns.com/dns-query'],   //用于 direct 出口域名解析的 DNS 服务器
+  "direct-nameserver": ['https://doh.pub/dns-query','https://dns.alidns.com/dns-query']  //用于 direct 出口域名解析的 DNS 服务器
 };
 
 // 代理组通用配置
