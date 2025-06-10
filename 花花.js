@@ -7,8 +7,8 @@ const proxyProviders = {
     // 自动更新时间 86400(秒) / 3600 = 24小时
     "interval": 86400,
     "override": {
-      // 节点名称前缀 |，用于区别机场节点
-      "additional-prefix": "|"
+      // 额外节点名称前缀，用于区别机场节点
+      "additional-prefix": ""
     }
   }
 }
@@ -69,8 +69,8 @@ const dnsConfig = {
   "use-system-hosts": false,
   "nameserver": ["https://1.1.1.1/dns-query", "https://dns.google/dns-query"],
   "default-nameserver": ["tls://223.5.5.5", "tls://119.29.29.29"],
-  "proxy-server-nameserver": ['https://doh.pub/dns-query'],
-  "direct-nameserver": ['https://doh.pub/dns-query','https://dns.alidns.com/dns-query']
+  "proxy-server-nameserver": ["https://doh.pub/dns-query"],
+  "direct-nameserver": ["https://doh.pub/dns-query","https://dns.alidns.com/dns-query"]
 };
 
 // 代理组通用配置
@@ -278,7 +278,7 @@ const ruleProviders = {
 
 // 自定义规则
 const rules = [
-  'GEOIP,private,DIRECT,no-resolve',
+  "GEOIP,private,DIRECT,no-resolve",
   "RULE-SET,Telegram,Telegram",
   "RULE-SET,YouTube,YouTube",
   "RULE-SET,TikTok,TikTok",
@@ -287,6 +287,6 @@ const rules = [
   "RULE-SET,Twitter,Twitter",
   "RULE-SET,Steam,Steam",
   "RULE-SET,Github,香港",
-  'GEOIP,CN,DIRECT',
+  "GEOIP,CN,DIRECT",
   "MATCH,Proxy"
 ];
