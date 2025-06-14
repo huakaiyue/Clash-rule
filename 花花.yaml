@@ -108,7 +108,7 @@ proxy-groups:
   - {name: 日本, <<: *url-test, filter: "(?i)(日本|JP)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"}
   - {name: 台湾, <<: *url-test, filter: "(?i)(台湾|TW)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"}
   - {name: 美国, <<: *url-test, filter: "(?i)(美国|US)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"}
-  - {name: 韩国, <<: *url-test, filter: "(?i)(韩国|SR)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"}
+  - {name: 韩国, <<: *url-test, filter: "(?i)(韩国|KR)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"}
   - {name: 新加坡, <<: *url-test, filter: "(?i)(新加坡|SG)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"}
   
   # 规则匹配
