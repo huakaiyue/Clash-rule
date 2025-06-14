@@ -1,16 +1,15 @@
-pa: &pa {type: http, interval: 10800, health-check: {enable: true, url: "https://www.gstatic.com/generate_204", interval: 300}}
-
+pa: &pa {type: http, interval: 33333, health-check: {enable: true, url: "https://www.gstatic.com/generate_204", interval: 333}}
 # 机场订阅
 proxy-providers:
   p1:
-    url:""
+    url: ""
     <<: *pa
     proxy: 直连
   p2:
     url: ""
     <<: *pa
     proxy: 直连
-    
+
 # 全局配置 
 port: 7890
 socks-port: 7891
@@ -26,8 +25,8 @@ log-level: warning
 find-process-mode: 'off'
 # interface-name: en0
 global-client-fingerprint: chrome
-keep-alive-idle: 600
-keep-alive-interval: 15
+keep-alive-idle: 666
+keep-alive-interval: 33
 disable-keep-alive: false
 profile:
   store-selected: true
@@ -51,14 +50,12 @@ sniffer:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
-  # 强行代理
-  force-domain:
-    - "+.v2ex.com"
-  # 跳过代理
+#  force-domain:
+#    - "+."
   skip-domain:
     - "+.baidu.com"
-    
-# 入站  
+
+# 入站
 tun:
   enable: true
   stack: mixed
@@ -76,42 +73,46 @@ dns:
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "rule-set:private_domain,cn_domain"
+#   - "*"
     - "+.lan"
     - "+.local"
+    - "rule-set:cn_domain"
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
-  nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+#  nameserver-policy:
+#    "rule-set:cn_domain": system
 
 # 出站策略
+pp: &pp {type: select, proxies: [香港, 日本, 美国, 台湾, 韩国, 新加坡, 直连], include-all: true, filter: "(?i)^(?!.*(?:香港|HK|日本|JP|美国|US|台湾|TW|韩国|KR|新加坡|SG|直连|流量|到期|重置|扣费|客服)).*"}
 pr: &pr {type: select, proxies: [Proxy, 香港, 日本, 美国, 台湾, 韩国, 新加坡, 直连], include-all: true, filter: "(?i)^(?!.*(?:香港|HK|日本|JP|美国|US|台湾|TW|韩国|KR|新加坡|SG|直连|流量|到期|重置|扣费|客服)).*"}
-url-test: &url-test {type: url-test, url: "https://www.gstatic.com/generate_204", interval: 300, tolerance: 30, include-all: true, exclude-filter: "(?i)X[2-9]"}
+url-test: &url-test {type: url-test, url: "https://www.gstatic.com/generate_204", interval: 333, tolerance: 33, max-failed-times: 3, include-all: true, exclude-filter: "(?i)X[2-9]"}
 
 proxies:
   - {name: 直连, type: direct, udp: true}
 proxy-groups:
-  - {name: Proxy, type: select, proxies: [香港, 日本, 美国, 台湾, 韩国, 新加坡, 直连], include-all: true, filter: "(?i)^(?!.*(?:香港|HK|日本|JP|美国|US|台湾|TW|韩国|KR|新加坡|SG|直连|流量|到期|重置|扣费|客服|X5)).*", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png"}
-  - {name: Telegram, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png"}
-  - {name: YouTube, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png"}
-  - {name: TikTok, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png"}
-  - {name: Twitter, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png"}
-  - {name: OpenAI, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png"}
-  - {name: Google, <<: *pr, icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png"}
+  - {name: Proxy, <<: *pp}
+  - {name: Telegram, <<: *pr}
+  - {name: YouTube, <<: *pr}
+  - {name: TikTok, <<: *pr}
+  - {name: Twitter, <<: *pr}
+  - {name: OpenAI, <<: *pr}
+  - {name: Google, <<: *pr}
   
-  - {name: 香港, <<: *url-test, filter: "(?i)(香港|HK)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"}
-  - {name: 日本, <<: *url-test, filter: "(?i)(日本|JP)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"}
-  - {name: 台湾, <<: *url-test, filter: "(?i)(台湾|TW)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"}
-  - {name: 美国, <<: *url-test, filter: "(?i)(美国|US)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"}
-  - {name: 韩国, <<: *url-test, filter: "(?i)(韩国|KR)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"}
-  - {name: 新加坡, <<: *url-test, filter: "(?i)(新加坡|SG)", icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"}
+  - {name: 香港, <<: *url-test, filter: "(?i)(香港|HK)"}
+  - {name: 日本, <<: *url-test, filter: "(?i)(日本|JP)"}
+  - {name: 台湾, <<: *url-test, filter: "(?i)(台湾|TW)"}
+  - {name: 美国, <<: *url-test, filter: "(?i)(美国|US)"}
+  - {name: 韩国, <<: *url-test, filter: "(?i)(韩国|KR)"}
+  - {name: 新加坡, <<: *url-test, filter: "(?i)(新加坡|SG)"}
   
-  # 规则匹配
+# 规则匹配
 rules:
   - RULE-SET,private_domain,直连
   - RULE-SET,telegram_domain,Telegram
@@ -132,18 +133,19 @@ rules:
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
-  
+ 
 rule-providers: 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   tiktok_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
   twitter_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs"}
-  openai_domain: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
+  openai_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
   cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
