@@ -71,7 +71,7 @@ dns:
     - 119.29.29.29
   nameserver:
     - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-queey
+    - https://dns.alidns.com/dns-query
 
 # 出站策略
 pt: &pt {include-all: true, filter: "(?i)^(?!.*(?:香港|HK|日本|JP|美国|US|台湾|TW|韩国|KR|新加坡|SG)).*"}
